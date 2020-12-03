@@ -1041,7 +1041,7 @@ struct PasswordRule {
     }
 }
 
-let validPasswords = inputs.lazy.filter { input -> Bool in
+let validPasswords = inputs.filter { input -> Bool in
     // Split the string into rules and password
     let components = input.split(separator: ":")
     let ruleString = String(components[0])
