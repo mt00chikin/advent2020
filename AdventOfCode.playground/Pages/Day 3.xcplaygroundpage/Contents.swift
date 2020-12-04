@@ -370,7 +370,5 @@ let trees = [configOne, configTwo, configThree, configFour, configFive].map { co
     return treeFinder.numberOfTrees(input: input)
 }
 
-let total = trees.reduce(1, { x, y in
-    x * y
-})
+let total = trees.reduce(1, *)
 
