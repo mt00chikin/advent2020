@@ -38,32 +38,47 @@ let path = Bundle.main.path(forResource: "Input", ofType: "txt")!
 let data = FileManager.default.contents(atPath: path)!
 
 let input = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines)
-let passports = input?.components(separatedBy: "\n\n")
+let rawPassports = input?.components(separatedBy: "\n\n")
 
-let validPassports = passports?.compactMap { passportString -> String? in
+let passports = rawPassports?.map { rawPassport -> [String: String] in
     // Split each passport data into components separated by whitespace
-    let components = passportString.components(separatedBy: .whitespacesAndNewlines)
+    let components = rawPassport.components(separatedBy: .whitespacesAndNewlines)
     // Each key value pair is colon delimited, split each into pairs and store them in a dictionary
-    let pairs: [String: String] = components.reduce(into: [:]) { dictionary, component in
+    return components.reduce(into: [:]) { dictionary, component in
         let pair = component.components(separatedBy: ":")
         dictionary[pair[0]] = pair[1]
     }
+}
 
+// MARK: - Validation
+
+/// Verifies that all required fields are present on a passport. No additional validation is done on the values of the fields
+func hasRequiredFields(passport: [String: String]) -> Bool {
     let fields = Set(Field.requiredFields.map { $0.rawValue })
     // Only proceed if all required fields are present
-    guard fields.isSubset(of: pairs.keys) else { return nil }
+    return fields.isSubset(of: passport.keys)
+}
+
+/// Verifies that the passport is completely valid, ensuring that all required fields are present and that the values associated with those fields are valid
+func isValidPassport(passport: [String: String]) -> Bool {
+    guard hasRequiredFields(passport: passport) else { return false }
 
     // Ensure that all required fields are met
     var isPassportValid = true
     Field.requiredFields.forEach { field in
-        guard let value = pairs[field.rawValue], value.range(of: field.pattern, options: .regularExpression) != nil else {
-            print("Failed validation for field: \(field) with value: \(pairs[field.rawValue])")
+        guard let value = passport[field.rawValue], value.range(of: field.pattern, options: .regularExpression) != nil else {
             isPassportValid = false
             return
         }
     }
 
-    guard isPassportValid else { return nil }
-    return passportString
+    return isPassportValid
 }
-validPassports?.count
+
+// MARK: - Exercise
+
+let partOnePassports = passports?.filter { hasRequiredFields(passport: $0) }
+partOnePassports?.count
+
+let partTwoPassports = passports?.filter { isValidPassport(passport: $0) }
+partTwoPassports?.count
