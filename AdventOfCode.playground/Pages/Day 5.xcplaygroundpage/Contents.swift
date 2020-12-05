@@ -23,6 +23,8 @@ struct BoardingPass {
     }
 }
 
+// MARK: - Proofs
+
 let knownMinSeat = "FFFFFFFLLL"
 let minSeat = BoardingPass(passString: knownMinSeat)
 minSeat?.seatColumn
@@ -32,6 +34,8 @@ let knownMaxSeat = "BBBBBBBRRR"
 let maxSeat = BoardingPass(passString: knownMaxSeat)
 maxSeat?.seatColumn
 maxSeat?.seatRow
+
+// MARK: - Implementation
 
 let path = Bundle.main.path(forResource: "Input", ofType: "txt")!
 let data = FileManager.default.contents(atPath: path)!
