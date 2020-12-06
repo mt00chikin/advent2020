@@ -1,5 +1,3 @@
-//: [Previous](@previous)
-
 import Foundation
 
 struct BoardingPass {
@@ -55,6 +53,7 @@ let maximumSeatId = seatIds.max()
 let sortedSeatIds = seatIds.sorted()
 var mySeatId: Int?
 for (index, seatId) in sortedSeatIds.enumerated() {
+    // Given the right opportunity, this will crash
     if sortedSeatIds[index + 1] != seatId + 1 {
         mySeatId = seatId + 1
         break
