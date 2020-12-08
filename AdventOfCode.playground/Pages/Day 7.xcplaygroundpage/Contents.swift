@@ -56,6 +56,7 @@ print("Number of unique bags \(ancestors.count)")
 func countDescendants(bag: Bag) -> Int {
     bag.contents.reduce(0) { result, content -> Int in
         guard let child = registry.retrieveBag(withColor: content.color) else { return result }
+        print("Child \(child)")
         return result + content.count * (countDescendants(bag: child) + 1)
     }
 }
