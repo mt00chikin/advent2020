@@ -18,6 +18,8 @@ for index in startIndex..<input.count {
     let lookbackIndex = index - preambleLength
     let preamble = input[lookbackIndex..<index]
 
+    let value = input[index]
+
     var sums: Set<Int> = []
     for i in preamble.startIndex..<preamble.endIndex {
         for j in preamble.startIndex..<preamble.endIndex {
@@ -32,8 +34,8 @@ for index in startIndex..<input.count {
         }
     }
 
-    guard sums.contains(input[index]) else {
-        solution = (index, input[index])
+    if !sums.contains(value) {
+        solution = (index, value)
         break
     }
 }
