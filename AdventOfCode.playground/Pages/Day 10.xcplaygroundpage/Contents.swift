@@ -28,13 +28,15 @@ let partOneSolution = oneJoltDifferences * threeJoltDifferences
 // MARK: - Part 2
 
 var permutations: [Int: Int] = [:]
+let finalAdapterValue = input.last!
 // Assume a single permutation for the final 3 jolt jump from adapter to the charging outlet
-permutations[input.last!] = 1
+permutations[finalAdapterValue] = 1
 // Iterate over the adapters, doing a lookback at each to figure out how many adapters are available and how many distinct permutations each has available
-for i in (0..<input.count - 1).reversed() {
-    let currentValue = input[i]
+let reversedInput: [Int] = input.reversed()
+for i in (1..<input.count) {
+    let currentValue = reversedInput[i]
     // Look back at the previous three adapters, keeping only eligible ones (<3 jolt difference)
-    let availableAdapters = input.dropFirst(i + 1).prefix(3).filter { $0 - currentValue <= 3 }
+    let availableAdapters = reversedInput.prefix(upTo: i).filter { $0 - currentValue <= 3 }
     // Add all the possible permutations for each available adapter, that's how many we have available to us at this level
     permutations[currentValue] = availableAdapters.compactMap { permutations[$0] }.reduce(0, +)
 }
