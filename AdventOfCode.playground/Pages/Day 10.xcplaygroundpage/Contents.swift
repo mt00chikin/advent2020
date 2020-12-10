@@ -23,7 +23,7 @@ for i in 0..<input.count {
     currentJoltage = input[i]
 }
 
-let partOneSolution = oneJoltDifferences * threeJoltDifferences
+let partOneSolution = oneJoltDifferences * threeJoltDifferences // 1755
 
 // MARK: - Part 2
 
@@ -42,4 +42,4 @@ for i in (1..<input.count) {
 }
 
 // How many distinct permutations are there from adapter at position 0?
-let partTwoSolution = permutations[0]
+let partTwoSolution = permutations[0] // 4049565169664
