@@ -147,6 +147,7 @@ instructions.forEach { instruction in
         var distanceToWaypoint = currentCoordinate.distance(to: waypoint)
         // Rotate waypoint about the ship
         switch direction {
+        // All of the following statements assume a problem statement where the waypoint is rotated only in 90 degree intervals. Any other value would fail here
         case .left:
             switch instruction.value {
             case 90:
